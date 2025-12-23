@@ -58,7 +58,7 @@ Asagidaki ortam degiskenlerini tanimlayin:
 - `DB_URL` (ornek: `jdbc:postgresql://localhost:5432/my_db`)
 - `DB_USER` (ornek: `my_user`)
 - `DB_PASS` (ornek: `my_pass`)
-- `JWT_SECRET` (uzun ve tahmin edilmesi zor bir deger)
+- `JWT_SECRET` (base64 formatinda, en az 32 byte karsiligi)
 
 Windows (PowerShell) ornek:
 
@@ -66,7 +66,7 @@ Windows (PowerShell) ornek:
 $env:DB_URL="jdbc:postgresql://localhost:5432/my_db"
 $env:DB_USER="my_user"
 $env:DB_PASS="my_pass"
-$env:JWT_SECRET="change_me_to_a_long_random_secret"
+$env:JWT_SECRET="bXktYmFzZTY0LXNlY3JldC1leGFtcGxlLWZvci1kb2NzLW9ubHk="
 ```
 
 Mac/Linux (bash/zsh) ornek:
@@ -75,7 +75,7 @@ Mac/Linux (bash/zsh) ornek:
 export DB_URL="jdbc:postgresql://localhost:5432/my_db"
 export DB_USER="my_user"
 export DB_PASS="my_pass"
-export JWT_SECRET="change_me_to_a_long_random_secret"
+export JWT_SECRET="bXktYmFzZTY0LXNlY3JldC1leGFtcGxlLWZvci1kb2NzLW9ubHk="
 ```
 
 #### Secenek B: Local Profil (Gelisme Ortami)
@@ -88,7 +88,7 @@ Ornek icerik:
 spring.datasource.url=jdbc:postgresql://localhost:5432/my_db
 spring.datasource.username=my_user
 spring.datasource.password=my_pass
-jwt.secret=change_me_to_a_long_random_secret
+jwt.secret=bXktYmFzZTY0LXNlY3JldC1leGFtcGxlLWZvci1kb2NzLW9ubHk=
 ```
 
 Local profili aktif etmek icin:
