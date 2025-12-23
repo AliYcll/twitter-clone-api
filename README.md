@@ -133,3 +133,17 @@ mvn test
 ## Katkida Bulunma
 
 Katkida bulunmak isterseniz pull request gonderebilirsiniz.
+
+## Frontend Entegrasyonu
+
+Frontend repo:
+
+- https://github.com/AliYcll/twitter-clone-frontend
+
+Varsayilan calisma duzeni:
+
+- Backend: `http://localhost:8080`
+- Frontend: `http://localhost:3200`
+- API base path: `/api/v1`
+
+Frontend uygulamasi bu API yapisi ile uyumludur. Backend ayaga kalkmadan frontend tek basina calismaz.
