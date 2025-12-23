@@ -1,66 +1,66 @@
 # Twitter Clone API
 
-Bu proje, Spring Boot ile gelistirilmis bir Twitter benzeri sosyal medya platformunun backend API'sidir. Ama�; Spring Boot ekosistemini pratik etmek, modern bir backend mimarisini deneyimlemek ve temel sosyal medya ak��lar�n� saglam bir API ile sunmakt�r.
+Bu proje, Spring Boot ile geliştirilmiş bir Twitter benzeri sosyal medya platformunun backend API’sidir. Amaç; Spring Boot ekosistemini pratik etmek, modern bir backend mimarisini deneyimlemek ve temel sosyal medya akışlarını sağlam bir API ile sunmaktır.
 
-## Ozellikler
+## Özellikler
 
-- Kullanici yonetimi: Kayit, giris ve JWT tabanli kimlik dogrulama
-- Tweet yonetimi: Tweet olusturma, listeleme, guncelleme, silme
-- Yorum yonetimi: Tweetlere yorum ekleme, guncelleme, silme
-- Begenme yonetimi: Like/Unlike
-- Retweet yonetimi: Retweet ekleme/silme ve kullanici retweet listesini goruntuleme
+- Kullanıcı yönetimi: Kayıt, giriş ve JWT tabanlı kimlik doğrulama
+- Tweet yönetimi: Tweet oluşturma, listeleme, güncelleme, silme
+- Yorum yönetimi: Tweetlere yorum ekleme, güncelleme, silme
+- Beğenme yönetimi: Like / Unlike
+- Retweet yönetimi: Retweet ekleme / silme ve kullanıcı retweet listesini görüntüleme
 
 ## Teknolojiler
 
 - Backend Framework: Spring Boot
-- Veritabani: PostgreSQL
-- Guvenlik: Spring Security + JWT
-- Bagimlilik Yoneticisi: Maven
+- Veritabanı: PostgreSQL
+- Güvenlik: Spring Security + JWT
+- Bağımlılık Yöneticisi: Maven
 - Dil: Java (JDK 17+)
 
 ## Mimari
 
-- Controller Katmani: HTTP isteklerini karsilar ve servislere yonlendirir
-- Service Katmani: Is mantigi
-- Repository Katmani: Veritabani erisimi
-- Entity Katmani: Veri modeli
-- Global Exception Handling: Merkezi hata yonetimi
-- Veri Dogrulama: Sunucu tarafi validation
+- Controller Katmanı: HTTP isteklerini karşılar ve servislere yönlendirir
+- Service Katmanı: İş mantığı
+- Repository Katmanı: Veritabanı erişimi
+- Entity Katmanı: Veri modeli
+- Global Exception Handling: Merkezi hata yönetimi
+- Veri Doğrulama: Sunucu tarafı validation
 
 ## API Temel Yolu
 
-Tum endpoint'ler su temel yol altindadir:
+Tüm endpoint’ler şu temel yol altındadır:
 
 `/api/v1`
 
-## Baslangic
+## Başlangıç
 
 ### 1) Gereksinimler
 
-- Java 17 veya uzeri
+- Java 17 veya üzeri
 - Apache Maven
 - PostgreSQL
 - Tercihen bir IDE (IntelliJ IDEA, VS Code vb.)
 
-### 2) Veritabani Kurulumu (PostgreSQL)
+### 2) Veritabanı Kurulumu (PostgreSQL)
 
-- PostgreSQL calistirin.
-- Ornek olarak `my_db` adinda bir veritabani olusturun.
+- PostgreSQL’i çalıştırın.
+- Örnek olarak `my_db` adında bir veritabanı oluşturun.
 
-### 3) Konfigurasyon Secenekleri
+### 3) Konfigürasyon Seçenekleri
 
-Bu proje, `application.properties` icinde gizli veri tutmaz. Yapilandirma icin iki secenek vardir:
+Bu proje, `application.properties` içinde gizli veri tutmaz. Yapılandırma için iki seçenek vardır:
 
-#### Secenek A: Ortam Degiskenleri (Onerilen)
+#### Seçenek A: Ortam Değişkenleri (Önerilen)
 
-Asagidaki ortam degiskenlerini tanimlayin:
+Aşağıdaki ortam değişkenlerini tanımlayın:
 
-- `DB_URL` (ornek: `jdbc:postgresql://localhost:5432/my_db`)
-- `DB_USER` (ornek: `my_user`)
-- `DB_PASS` (ornek: `my_pass`)
-- `JWT_SECRET` (base64 formatinda, en az 32 byte karsiligi)
+- `DB_URL` (örnek: `jdbc:postgresql://localhost:5432/my_db`)
+- `DB_USER` (örnek: `my_user`)
+- `DB_PASS` (örnek: `my_pass`)
+- `JWT_SECRET` (base64 formatında, en az 32 byte karşılığı)
 
-Windows (PowerShell) ornek:
+Windows (PowerShell) örnek:
 
 ```powershell
 $env:DB_URL="jdbc:postgresql://localhost:5432/my_db"
@@ -69,7 +69,7 @@ $env:DB_PASS="my_pass"
 $env:JWT_SECRET="bXktYmFzZTY0LXNlY3JldC1leGFtcGxlLWZvci1kb2NzLW9ubHk="
 ```
 
-Mac/Linux (bash/zsh) ornek:
+Mac / Linux (bash / zsh) örnek:
 
 ```bash
 export DB_URL="jdbc:postgresql://localhost:5432/my_db"
@@ -78,11 +78,11 @@ export DB_PASS="my_pass"
 export JWT_SECRET="bXktYmFzZTY0LXNlY3JldC1leGFtcGxlLWZvci1kb2NzLW9ubHk="
 ```
 
-#### Secenek B: Local Profil (Gelisme Ortami)
+#### Seçenek B: Local Profil (Geliştirme Ortamı)
 
-`application-local.properties` dosyasi kullanabilirsiniz. Bu dosya `.gitignore` icinde oldugu icin Git'e eklenmez.
+`application-local.properties` dosyası kullanabilirsiniz. Bu dosya `.gitignore` içinde olduğu için Git’e eklenmez.
 
-Ornek icerik:
+Örnek içerik:
 
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/my_db
@@ -91,7 +91,7 @@ spring.datasource.password=my_pass
 jwt.secret=bXktYmFzZTY0LXNlY3JldC1leGFtcGxlLWZvci1kb2NzLW9ubHk=
 ```
 
-Local profili aktif etmek icin:
+Local profili aktif etmek için:
 
 Windows (PowerShell):
 
@@ -99,13 +99,13 @@ Windows (PowerShell):
 $env:SPRING_PROFILES_ACTIVE="local"
 ```
 
-Mac/Linux (bash/zsh):
+Mac / Linux (bash / zsh):
 
 ```bash
 export SPRING_PROFILES_ACTIVE="local"
 ```
 
-### 4) Projeyi Calistirma
+### 4) Projeyi Çalıştırma
 
 ```bash
 cd twitter-clone-api/twitter-api
@@ -113,26 +113,26 @@ mvn clean install
 mvn spring-boot:run
 ```
 
-Uygulama varsayilan olarak `http://localhost:8080` adresinde calisir.
+Uygulama varsayılan olarak `http://localhost:8080` adresinde çalışır.
 
 ## Testler
 
-Testler icin H2 in-memory veritabani kullanilir (ayarlari `src/test/resources/application.properties` altindadir).
+Testler için H2 in-memory veritabanı kullanılır (ayarları `src/test/resources/application.properties` altındadır).
 
-Testleri calistirmak icin:
+Testleri çalıştırmak için:
 
 ```bash
 mvn test
 ```
 
-## Guvenlik Notlari
+## Güvenlik Notları
 
-- Gercek veritabani bilgilerini ve JWT secret degerlerini repo'ya eklemeyin.
-- `application-local.properties` dosyasi zaten `.gitignore` ile disarida tutulur.
+- Gerçek veritabanı bilgilerini ve JWT secret değerlerini repo’ya eklemeyin.
+- `application-local.properties` dosyası zaten `.gitignore` ile dışarıda tutulur.
 
-## Katkida Bulunma
+## Katkıda Bulunma
 
-Katkida bulunmak isterseniz pull request gonderebilirsiniz.
+Katkıda bulunmak isterseniz pull request gönderebilirsiniz.
 
 ## Frontend Entegrasyonu
 
@@ -140,10 +140,10 @@ Frontend repo:
 
 - https://github.com/AliYcll/twitter-clone-frontend
 
-Varsayilan calisma duzeni:
+Varsayılan çalışma düzeni:
 
-- Backend: `http://localhost:8080`
-- Frontend: `http://localhost:3200`
-- API base path: `/api/v1`
+- Backend: http://localhost:8080
+- Frontend: http://localhost:3200
+- API base path: /api/v1
 
-Frontend uygulamasi bu API yapisi ile uyumludur. Backend ayaga kalkmadan frontend tek basina calismaz.
+Frontend uygulaması bu API yapısı ile uyumludur. Backend ayağa kalkmadan frontend tek başına çalışmaz.
