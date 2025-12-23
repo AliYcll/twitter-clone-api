@@ -49,9 +49,16 @@ class TweetServiceTest {
 
     @Test
     void createTweet_ShouldSaveAndReturnTweet() {
-        when(tweetRepository.save(any(Tweet.class))).thenReturn(tweet);
+        com.twitterclone.api.dtos.TweetRequest request = new com.twitterclone.api.dtos.TweetRequest();
+        request.setContent("Original content");
+        
+        when(tweetRepository.save(any(Tweet.class))).thenAnswer(i -> {
+            Tweet savedTweet = i.getArgument(0);
+            savedTweet.setId(101L); 
+            return savedTweet;
+        });
 
-        Tweet result = tweetService.createTweet("Original content", user1);
+        Tweet result = tweetService.createTweet(request, user1);
 
         assertNotNull(result);
         assertEquals("Original content", result.getContent());

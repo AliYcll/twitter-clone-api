@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -32,6 +33,14 @@ public class CommentService {
         comment.setCreatedAt(LocalDateTime.now());
 
         return commentRepository.save(comment);
+    }
+
+    public List<Comment> getCommentsForTweet(Long tweetId) {
+        Optional<Tweet> tweetOptional = tweetRepository.findById(tweetId);
+        if (tweetOptional.isEmpty()) {
+            return null;
+        }
+        return commentRepository.findByTweetOrderByCreatedAtDesc(tweetOptional.get());
     }
 
     public Comment updateComment(Long commentId, String content, User user) {

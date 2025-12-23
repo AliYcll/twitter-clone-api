@@ -1,56 +1,135 @@
 # Twitter Clone API
 
-Bu proje, Spring Boot kullanarak geliştirilmiş bir Twitter benzeri sosyal medya platformunun arka uç (backend) API'sidir. Amacı, Spring Boot ekosisteminde edinilen bilgi ve becerileri pratik etmek, modern bir backend uygulamasının tasarım ve implementasyon süreçlerini deneyimlemektir. Proje, bir Twitter uygulamasının temel fonksiyonlarını sağlamayı hedefler.
+Bu proje, Spring Boot ile gelistirilmis bir Twitter benzeri sosyal medya platformunun backend API'sidir. Ama�; Spring Boot ekosistemini pratik etmek, modern bir backend mimarisini deneyimlemek ve temel sosyal medya ak��lar�n� saglam bir API ile sunmakt�r.
 
-## Özellikler
+## Ozellikler
 
-- **Kullanıcı Yönetimi:** Kullanıcı kaydı, girişi ve JWT tabanlı kimlik doğrulama/yetkilendirme.
-- **Tweet Yönetimi:** Tweet oluşturma, görüntüleme, güncelleme ve silme.
-- **Yorum Yönetimi:** Tweetlere yorum yapma, yorumları güncelleme ve silme.
-- **Beğeni Yönetimi:** Tweetleri beğenme ve beğeniyi geri çekme (beğenmeme).
-- **Retweet Yönetimi:** Tweetleri retweet etme ve retweetleri silme.
+- Kullanici yonetimi: Kayit, giris ve JWT tabanli kimlik dogrulama
+- Tweet yonetimi: Tweet olusturma, listeleme, guncelleme, silme
+- Yorum yonetimi: Tweetlere yorum ekleme, guncelleme, silme
+- Begenme yonetimi: Like/Unlike
+- Retweet yonetimi: Retweet ekleme/silme ve kullanici retweet listesini goruntuleme
 
 ## Teknolojiler
 
-- **Backend Framework:** Spring Boot
-- **Veritabanı:** PostgreSQL (Entity katmanı ile uyumlu)
-- **Güvenlik:** Spring Security (JWT - JSON Web Token ile)
-- **Bağımlılık Yönetimi:** Maven
-- **Dil:** Java
+- Backend Framework: Spring Boot
+- Veritabani: PostgreSQL
+- Guvenlik: Spring Security + JWT
+- Bagimlilik Yoneticisi: Maven
+- Dil: Java (JDK 17+)
 
 ## Mimari
 
-Proje, katmanlı mimari prensiplerine uygun olarak tasarlanmıştır:
+- Controller Katmani: HTTP isteklerini karsilar ve servislere yonlendirir
+- Service Katmani: Is mantigi
+- Repository Katmani: Veritabani erisimi
+- Entity Katmani: Veri modeli
+- Global Exception Handling: Merkezi hata yonetimi
+- Veri Dogrulama: Sunucu tarafi validation
 
--   **Controller Katmanı:** Gelen HTTP isteklerini karşılar ve iş mantığına yönlendirir.
--   **Service Katmanı:** İş mantığını ve veri akışını yönetir.
--   **Repository Katmanı:** Veritabanı ile etkileşimi sağlar.
--   **Entity Katmanı:** Veritabanı tablolarını temsil eden POJO sınıflarını içerir.
--   **Global Exception Handling:** Uygulama genelinde merkezi hata yönetimi.
--   **Veri Doğrulama:** Giriş verileri için sunucu tarafı doğrulama.
+## API Temel Yolu
 
-## Başlangıç
+Tum endpoint'ler su temel yol altindadir:
 
-Projeyi yerel ortamınızda çalıştırmak için aşağıdaki adımları takip edebilirsiniz:
+`/api/v1`
 
-1.  **Gereksinimler:**
-    *   Java Development Kit (JDK) 17 veya üzeri
-    *   Apache Maven
-    *   PostgreSQL veritabanı
-    *   Tercihen bir IDE (IntelliJ IDEA, VS Code vb.)
-2.  **Veritabanı Kurulumu:**
-    *   Bir PostgreSQL sunucusu çalıştırın.
-    *   `twitter_clone_db` adında yeni bir veritabanı oluşturun.
-    *   `src/main/resources/application.properties` dosyasındaki veritabanı bağlantı bilgilerini kendi ortamınıza göre güncelleyin.
-3.  **Projeyi Çalıştırma:**
-    *   Projeyi klonlayın: `git clone [proje_reposu_url]`
-    *   Proje dizinine gidin: `cd twitter-clone-api/twitter-api`
-    *   Maven bağımlılıklarını yükleyin: `mvn clean install`
-    *   Uygulamayı çalıştırın: `mvn spring-boot:run`
-    *   API varsayılan olarak `http://localhost:8080` adresinde çalışacaktır.
+## Baslangic
 
-## Katkıda Bulunma
+### 1) Gereksinimler
 
-Geliştirmelere katkıda bulunmak isterseniz, lütfen bir pull request göndermekten çekinmeyin.
+- Java 17 veya uzeri
+- Apache Maven
+- PostgreSQL
+- Tercihen bir IDE (IntelliJ IDEA, VS Code vb.)
 
----
+### 2) Veritabani Kurulumu (PostgreSQL)
+
+- PostgreSQL calistirin.
+- Ornek olarak `my_db` adinda bir veritabani olusturun.
+
+### 3) Konfigurasyon Secenekleri
+
+Bu proje, `application.properties` icinde gizli veri tutmaz. Yapilandirma icin iki secenek vardir:
+
+#### Secenek A: Ortam Degiskenleri (Onerilen)
+
+Asagidaki ortam degiskenlerini tanimlayin:
+
+- `DB_URL` (ornek: `jdbc:postgresql://localhost:5432/my_db`)
+- `DB_USER` (ornek: `my_user`)
+- `DB_PASS` (ornek: `my_pass`)
+- `JWT_SECRET` (uzun ve tahmin edilmesi zor bir deger)
+
+Windows (PowerShell) ornek:
+
+```powershell
+$env:DB_URL="jdbc:postgresql://localhost:5432/my_db"
+$env:DB_USER="my_user"
+$env:DB_PASS="my_pass"
+$env:JWT_SECRET="change_me_to_a_long_random_secret"
+```
+
+Mac/Linux (bash/zsh) ornek:
+
+```bash
+export DB_URL="jdbc:postgresql://localhost:5432/my_db"
+export DB_USER="my_user"
+export DB_PASS="my_pass"
+export JWT_SECRET="change_me_to_a_long_random_secret"
+```
+
+#### Secenek B: Local Profil (Gelisme Ortami)
+
+`application-local.properties` dosyasi kullanabilirsiniz. Bu dosya `.gitignore` icinde oldugu icin Git'e eklenmez.
+
+Ornek icerik:
+
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/my_db
+spring.datasource.username=my_user
+spring.datasource.password=my_pass
+jwt.secret=change_me_to_a_long_random_secret
+```
+
+Local profili aktif etmek icin:
+
+Windows (PowerShell):
+
+```powershell
+$env:SPRING_PROFILES_ACTIVE="local"
+```
+
+Mac/Linux (bash/zsh):
+
+```bash
+export SPRING_PROFILES_ACTIVE="local"
+```
+
+### 4) Projeyi Calistirma
+
+```bash
+cd twitter-clone-api/twitter-api
+mvn clean install
+mvn spring-boot:run
+```
+
+Uygulama varsayilan olarak `http://localhost:8080` adresinde calisir.
+
+## Testler
+
+Testler icin H2 in-memory veritabani kullanilir (ayarlari `src/test/resources/application.properties` altindadir).
+
+Testleri calistirmak icin:
+
+```bash
+mvn test
+```
+
+## Guvenlik Notlari
+
+- Gercek veritabani bilgilerini ve JWT secret degerlerini repo'ya eklemeyin.
+- `application-local.properties` dosyasi zaten `.gitignore` ile disarida tutulur.
+
+## Katkida Bulunma
+
+Katkida bulunmak isterseniz pull request gonderebilirsiniz.

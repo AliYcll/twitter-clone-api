@@ -26,8 +26,9 @@ public class LikeService {
         Tweet tweet = tweetOptional.get();
 
         
-        if (likeRepository.findByUserAndTweet(user, tweet).isPresent()) {
-            return null; 
+        Optional<Like> existingLike = likeRepository.findByUserAndTweet(user, tweet);
+        if (existingLike.isPresent()) {
+            return existingLike.get();
         }
 
         Like like = new Like();

@@ -1,5 +1,6 @@
 package com.twitterclone.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -31,6 +32,7 @@ public class Comment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tweet_id", nullable = false)
+    @JsonIgnore
     private Tweet tweet;
 
     @Column(name = "created_at", nullable = false, updatable = false)

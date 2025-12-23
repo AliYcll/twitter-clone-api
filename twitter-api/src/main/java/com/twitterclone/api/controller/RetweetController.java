@@ -2,6 +2,7 @@ package com.twitterclone.api.controller;
 
 import com.twitterclone.api.dtos.RetweetRequest;
 import com.twitterclone.api.model.Retweet;
+import com.twitterclone.api.model.Tweet;
 import com.twitterclone.api.model.User;
 import com.twitterclone.api.service.RetweetService;
 import com.twitterclone.api.service.UserService;
@@ -12,8 +13,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/retweet")
+@RequestMapping("/api/v1/retweets")
 @AllArgsConstructor
 public class RetweetController {
 
@@ -46,6 +49,13 @@ public class RetweetController {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<List<Tweet>> getMyRetweets() {
+        User currentUser = getCurrentUser();
+        List<Tweet> tweets = retweetService.getRetweetedTweets(currentUser);
+        return ResponseEntity.ok(tweets);
     }
 }
 

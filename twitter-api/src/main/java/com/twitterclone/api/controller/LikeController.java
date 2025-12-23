@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1/likes")
 @AllArgsConstructor
 public class LikeController {
 
@@ -29,7 +29,7 @@ public class LikeController {
         return userService.findByEmail(currentPrincipalName);
     }
 
-    @PostMapping("/like")
+    @PostMapping
     public ResponseEntity<Like> likeTweet(@Valid @RequestBody LikeRequest request) {
         User currentUser = getCurrentUser();
         Like newLike = likeService.likeTweet(request.getTweetId(), currentUser);

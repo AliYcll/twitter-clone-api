@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/tweets")
+@RequestMapping("/api/v1/tweets")
 @AllArgsConstructor
 public class TweetController {
 
@@ -28,10 +28,16 @@ public class TweetController {
         return userService.findByEmail(currentPrincipalName);
     }
 
+    @GetMapping
+    public ResponseEntity<List<Tweet>> getAllTweets() {
+        List<Tweet> tweets = tweetService.getAllTweets();
+        return ResponseEntity.ok(tweets);
+    }
+
     @PostMapping
     public ResponseEntity<Tweet> createTweet(@Valid @RequestBody TweetRequest request) {
         User currentUser = getCurrentUser();
-        Tweet newTweet = tweetService.createTweet(request.getContent(), currentUser);
+        Tweet newTweet = tweetService.createTweet(request, currentUser);
         return ResponseEntity.ok(newTweet);
     }
 

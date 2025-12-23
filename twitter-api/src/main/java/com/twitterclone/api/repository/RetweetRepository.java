@@ -8,9 +8,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface RetweetRepository extends JpaRepository<Retweet, RetweetId> {
     Optional<Retweet> findByUserAndTweet(User user, Tweet tweet);
+    List<Retweet> findByUserOrderByCreatedAtDesc(User user);
+    void deleteByTweet(Tweet tweet);
 }
 

@@ -10,7 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,8 +29,9 @@ public class RetweetService {
         Tweet tweet = tweetOptional.get();
 
         
-        if (retweetRepository.findByUserAndTweet(user, tweet).isPresent()) {
-            return null; 
+        Optional<Retweet> existingRetweet = retweetRepository.findByUserAndTweet(user, tweet);
+        if (existingRetweet.isPresent()) {
+            return existingRetweet.get();
         }
 
         Retweet retweet = new Retweet();
@@ -54,6 +57,13 @@ public class RetweetService {
 
         retweetRepository.delete(retweetOptional.get());
         return true;
+    }
+
+    public List<Tweet> getRetweetedTweets(User user) {
+        return retweetRepository.findByUserOrderByCreatedAtDesc(user)
+                .stream()
+                .map(Retweet::getTweet)
+                .collect(Collectors.toList());
     }
 }
 

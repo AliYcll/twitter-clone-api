@@ -12,5 +12,5 @@ import java.util.Optional;
 @Repository
 public interface LikeRepository extends JpaRepository<Like, LikeId> {
     Optional<Like> findByUserAndTweet(User user, Tweet tweet);
+    void deleteByTweet(Tweet tweet);
 }
-

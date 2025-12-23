@@ -1,6 +1,7 @@
 package com.twitterclone.api.controller;
 
 import com.twitterclone.api.dtos.CommentRequest;
+import com.twitterclone.api.dtos.CommentUpdateRequest;
 import com.twitterclone.api.model.Comment;
 import com.twitterclone.api.model.User;
 import com.twitterclone.api.service.CommentService;
@@ -13,7 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/comments")
+@RequestMapping("/api/v1/comments")
 @AllArgsConstructor
 public class CommentController {
 
@@ -37,10 +38,22 @@ public class CommentController {
         return ResponseEntity.ok(newComment);
     }
 
+    @GetMapping("/tweet/{tweetId}")
+    public ResponseEntity<?> getCommentsByTweet(@PathVariable Long tweetId) {
+        var comments = commentService.getCommentsForTweet(tweetId);
+        if (comments == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(comments);
+    }
+
     @PutMapping("/{commentId}")
-    public ResponseEntity<Comment> updateComment(@PathVariable Long commentId, @RequestBody String content) {
+    public ResponseEntity<Comment> updateComment(
+            @PathVariable Long commentId,
+            @Valid @RequestBody CommentUpdateRequest request
+    ) {
         User currentUser = getCurrentUser();
-        Comment updatedComment = commentService.updateComment(commentId, content, currentUser);
+        Comment updatedComment = commentService.updateComment(commentId, request.getContent(), currentUser);
         if (updatedComment == null) {
             
             return ResponseEntity.status(403).build();
