@@ -1,6 +1,6 @@
 # Twitter Clone API
 
-Bu proje, Spring Boot ile geliştirilmiş bir Twitter benzeri sosyal medya platformunun backend API’sidir. Amaç; Spring Boot ekosistemini pratik etmek, modern bir backend mimarisini deneyimlemek ve temel sosyal medya akışlarını sağlam bir API ile sunmaktır.
+Bu proje, Spring Boot ile geliştirilmiş bir Twitter benzeri sosyal medya platformunun backend API'sidir. Amaç; Spring Boot ekosistemini pratik etmek, modern bir backend mimarisini deneyimlemek ve temel sosyal medya akışlarını sağlam bir API ile sunmaktır.
 
 ## Özellikler
 
@@ -24,13 +24,13 @@ Bu proje, Spring Boot ile geliştirilmiş bir Twitter benzeri sosyal medya platf
 - Service Katmanı: İş mantığı
 - Repository Katmanı: Veritabanı erişimi
 - Entity Katmanı: Veri modeli
-- DTO/Mapper KatmanZ�: Request/response yapZ�larZ�nZ� ayrZ�YtZ�rZ�lmasZ� ve gǼvenli veri dǶnǼ�YtǼrme
+- DTO/Mapper Katmanı: Request/response yapılarının ayrıştırılması ve güvenli veri dönüştürme
 - Global Exception Handling: Merkezi hata yönetimi
 - Veri Doğrulama: Sunucu tarafı validation
 
 ## API Temel Yolu
 
-Tüm endpoint’ler şu temel yol altındadır:
+Tüm endpoint'ler şu temel yol altındadır:
 
 `/api/v1`
 
@@ -45,7 +45,7 @@ Tüm endpoint’ler şu temel yol altındadır:
 
 ### 2) Veritabanı Kurulumu (PostgreSQL)
 
-- PostgreSQL’i çalıştırın.
+- PostgreSQL'i çalıştırın.
 - Örnek olarak `my_db` adında bir veritabanı oluşturun.
 
 ### 3) Konfigürasyon Seçenekleri
@@ -56,12 +56,12 @@ Bu proje, `application.properties` içinde gizli veri tutmaz. Yapılandırma iç
 
 Aşağıdaki ortam değişkenlerini tanımlayın:
 
-- `DB_URL` (örnek: `jdbc:postgresql://localhost:5432/my_db`)
-- `DB_USER` (örnek: `my_user`)
-- `DB_PASS` (örnek: `my_pass`)
+- `DB_URL` (Örnek: `jdbc:postgresql://localhost:5432/my_db`)
+- `DB_USER` (Örnek: `my_user`)
+- `DB_PASS` (Örnek: `my_pass`)
 - `JWT_SECRET` (base64 formatında, en az 32 byte karşılığı)
 
-Windows (PowerShell) örnek:
+Windows (PowerShell) Örnek:
 
 ```powershell
 $env:DB_URL="jdbc:postgresql://localhost:5432/my_db"
@@ -70,7 +70,7 @@ $env:DB_PASS="my_pass"
 $env:JWT_SECRET="bXktYmFzZTY0LXNlY3JldC1leGFtcGxlLWZvci1kb2NzLW9ubHk="
 ```
 
-Mac / Linux (bash / zsh) örnek:
+Mac / Linux (bash / zsh) Örnek:
 
 ```bash
 export DB_URL="jdbc:postgresql://localhost:5432/my_db"
@@ -81,7 +81,7 @@ export JWT_SECRET="bXktYmFzZTY0LXNlY3JldC1leGFtcGxlLWZvci1kb2NzLW9ubHk="
 
 #### Seçenek B: Local Profil (Geliştirme Ortamı)
 
-`application-local.properties` dosyası kullanabilirsiniz. Bu dosya `.gitignore` içinde olduğu için Git’e eklenmez.
+`application-local.properties` dosyasını kullanabilirsiniz. Bu dosya `.gitignore` içinde olduğu için Git'te eklenmez.
 
 Örnek içerik:
 
@@ -118,7 +118,7 @@ Uygulama varsayılan olarak `http://localhost:8080` adresinde çalışır.
 
 ## Testler
 
-Testler için H2 in-memory veritabanı kullanılır (ayarları `src/test/resources/application.properties` altındadır).
+Testler için H2 in-memory veritabanı kullanılır (ayarlar `src/test/resources/application.properties` altındadır).
 
 Testleri çalıştırmak için:
 
@@ -128,7 +128,7 @@ mvn test
 
 ## Güvenlik Notları
 
-- Gerçek veritabanı bilgilerini ve JWT secret değerlerini repo’ya eklemeyin.
+- Gerçek veritabanı bilgilerini ve JWT secret değerlerini repo'ya eklemeyin.
 - `application-local.properties` dosyası zaten `.gitignore` ile dışarıda tutulur.
 
 ## Katkıda Bulunma
