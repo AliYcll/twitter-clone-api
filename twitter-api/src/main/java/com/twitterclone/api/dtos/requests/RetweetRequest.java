@@ -1,11 +1,10 @@
-package com.twitterclone.api.dtos;
+package com.twitterclone.api.dtos.requests;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class LikeRequest {
+public class RetweetRequest {
     @NotNull
     private Long tweetId;
 }
-

@@ -1,4 +1,4 @@
-package com.twitterclone.api.dtos;
+package com.twitterclone.api.dtos.requests;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

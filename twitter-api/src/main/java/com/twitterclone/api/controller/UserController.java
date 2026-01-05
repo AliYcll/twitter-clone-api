@@ -1,5 +1,7 @@
 package com.twitterclone.api.controller;
 
+import com.twitterclone.api.dtos.responses.UserSummaryResponse;
+import com.twitterclone.api.mapper.UserMapper;
 import com.twitterclone.api.model.User;
 import com.twitterclone.api.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,14 +21,17 @@ public class UserController
     private final UserService userService;
 
     @GetMapping
-    public List<User> getAllUsers(){
-        return userService.getAllUsers();
+    public List<UserSummaryResponse> getAllUsers(){
+        return userService.getAllUsers().stream()
+                .map(UserMapper::toSummary)
+                .toList();
     }
 
     @GetMapping("/me")
-    public User getCurrentUser() {
+    public UserSummaryResponse getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        return userService.findByEmail(currentPrincipalName);
+        User user = userService.findByEmail(currentPrincipalName);
+        return UserMapper.toSummary(user);
     }
 }

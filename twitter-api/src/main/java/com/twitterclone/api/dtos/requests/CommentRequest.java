@@ -1,4 +1,4 @@
-package com.twitterclone.api.dtos;
+package com.twitterclone.api.dtos.requests;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,4 +14,3 @@ public class CommentRequest {
     @Size(max = 280)
     private String content;
 }
-

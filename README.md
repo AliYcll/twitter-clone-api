@@ -24,6 +24,7 @@ Bu proje, Spring Boot ile geliştirilmiş bir Twitter benzeri sosyal medya platf
 - Service Katmanı: İş mantığı
 - Repository Katmanı: Veritabanı erişimi
 - Entity Katmanı: Veri modeli
+- DTO/Mapper KatmanZ�: Request/response yapZ�larZ�nZ� ayrZ�YtZ�rZ�lmasZ� ve gǼvenli veri dǶnǼ�YtǼrme
 - Global Exception Handling: Merkezi hata yönetimi
 - Veri Doğrulama: Sunucu tarafı validation
 
@@ -143,7 +144,7 @@ Frontend repo:
 Varsayılan çalışma düzeni:
 
 - Backend: http://localhost:8080
-- Frontend: http://localhost:3200
+- Frontend: http://localhost:3200 (alternatif: http://localhost:5173)
 - API base path: /api/v1
 
 Frontend uygulaması bu API yapısı ile uyumludur. Backend ayağa kalkmadan frontend tek başına çalışmaz.

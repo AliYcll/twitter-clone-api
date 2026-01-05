@@ -1,8 +1,8 @@
 package com.twitterclone.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.twitterclone.api.dtos.AuthResponse;
-import com.twitterclone.api.dtos.RegisterRequest;
+import com.twitterclone.api.dtos.requests.RegisterRequest;
+import com.twitterclone.api.dtos.responses.AuthResponse;
 import com.twitterclone.api.exception.UserAlreadyExistsException;
 import com.twitterclone.api.repository.UserRepository;
 import com.twitterclone.api.security.config.SecurityConfiguration;
@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -34,6 +35,9 @@ class AuthControllerTest {
     
     @MockBean
     private UserRepository userRepository;
+
+    @MockBean
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private ObjectMapper objectMapper;

@@ -1,4 +1,4 @@
-package com.twitterclone.api.dtos;
+package com.twitterclone.api.dtos.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,4 +13,3 @@ public class AuthResponse {
     private String email;
     private Long id;
 }
-

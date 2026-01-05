@@ -58,14 +58,15 @@ class LikeServiceTest {
     }
 
     @Test
-    void likeTweet_WhenTweetExistsAndAlreadyLiked_ShouldReturnNull() {
+    void likeTweet_WhenTweetExistsAndAlreadyLiked_ShouldReturnExistingLike() {
         Like existingLike = new Like(new LikeId(user.getId(), tweet.getId()), user, tweet);
         when(tweetRepository.findById(101L)).thenReturn(Optional.of(tweet));
         when(likeRepository.findByUserAndTweet(user, tweet)).thenReturn(Optional.of(existingLike));
 
         Like result = likeService.likeTweet(101L, user);
 
-        assertNull(result);
+        assertNotNull(result);
+        assertEquals(existingLike, result);
         verify(likeRepository, never()).save(any(Like.class));
     }
 

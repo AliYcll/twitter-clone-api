@@ -64,14 +64,15 @@ class RetweetServiceTest {
     }
 
     @Test
-    void createRetweet_WhenAlreadyRetweeted_ShouldReturnNull() {
+    void createRetweet_WhenAlreadyRetweeted_ShouldReturnExistingRetweet() {
         Retweet existingRetweet = new Retweet(new RetweetId(user.getId(), tweet.getId()), user, tweet, LocalDateTime.now());
         when(tweetRepository.findById(101L)).thenReturn(Optional.of(tweet));
         when(retweetRepository.findByUserAndTweet(user, tweet)).thenReturn(Optional.of(existingRetweet));
 
         Retweet result = retweetService.createRetweet(101L, user);
 
-        assertNull(result);
+        assertNotNull(result);
+        assertEquals(existingRetweet, result);
         verify(retweetRepository, never()).save(any(Retweet.class));
     }
     

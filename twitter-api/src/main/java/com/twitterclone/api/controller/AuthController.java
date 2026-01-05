@@ -1,8 +1,8 @@
 package com.twitterclone.api.controller;
 
-import com.twitterclone.api.dtos.AuthResponse;
-import com.twitterclone.api.dtos.LoginRequest;
-import com.twitterclone.api.dtos.RegisterRequest;
+import com.twitterclone.api.dtos.requests.LoginRequest;
+import com.twitterclone.api.dtos.requests.RegisterRequest;
+import com.twitterclone.api.dtos.responses.AuthResponse;
 import com.twitterclone.api.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

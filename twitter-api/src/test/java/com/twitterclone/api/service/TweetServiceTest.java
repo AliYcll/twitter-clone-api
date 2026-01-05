@@ -1,7 +1,11 @@
 package com.twitterclone.api.service;
 
+import com.twitterclone.api.dtos.requests.TweetRequest;
 import com.twitterclone.api.model.Tweet;
 import com.twitterclone.api.model.User;
+import com.twitterclone.api.repository.CommentRepository;
+import com.twitterclone.api.repository.LikeRepository;
+import com.twitterclone.api.repository.RetweetRepository;
 import com.twitterclone.api.repository.TweetRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +26,15 @@ class TweetServiceTest {
 
     @Mock
     private TweetRepository tweetRepository;
+
+    @Mock
+    private CommentRepository commentRepository;
+
+    @Mock
+    private LikeRepository likeRepository;
+
+    @Mock
+    private RetweetRepository retweetRepository;
 
     @InjectMocks
     private TweetService tweetService;
@@ -49,7 +62,7 @@ class TweetServiceTest {
 
     @Test
     void createTweet_ShouldSaveAndReturnTweet() {
-        com.twitterclone.api.dtos.TweetRequest request = new com.twitterclone.api.dtos.TweetRequest();
+        TweetRequest request = new TweetRequest();
         request.setContent("Original content");
         
         when(tweetRepository.save(any(Tweet.class))).thenAnswer(i -> {

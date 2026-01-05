@@ -1,5 +1,6 @@
 package com.twitterclone.api.service;
 
+import com.twitterclone.api.dtos.requests.TweetRequest;
 import com.twitterclone.api.model.Tweet;
 import com.twitterclone.api.model.User;
 import com.twitterclone.api.repository.CommentRepository;
@@ -27,7 +28,7 @@ public class TweetService {
         return tweetRepository.findAllByOrderByCreatedAtDesc();
     }
 
-    public Tweet createTweet(com.twitterclone.api.dtos.TweetRequest request, User user) {
+    public Tweet createTweet(TweetRequest request, User user) {
         Tweet tweet = new Tweet();
         tweet.setContent(request.getContent());
         tweet.setUser(user);

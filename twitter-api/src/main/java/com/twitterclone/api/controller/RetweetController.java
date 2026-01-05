@@ -1,9 +1,15 @@
 package com.twitterclone.api.controller;
 
-import com.twitterclone.api.dtos.RetweetRequest;
+import com.twitterclone.api.dtos.requests.RetweetRequest;
+import com.twitterclone.api.dtos.responses.RetweetResponse;
+import com.twitterclone.api.dtos.responses.TweetResponse;
+import com.twitterclone.api.mapper.RetweetMapper;
+import com.twitterclone.api.mapper.TweetMapper;
 import com.twitterclone.api.model.Retweet;
 import com.twitterclone.api.model.Tweet;
 import com.twitterclone.api.model.User;
+import com.twitterclone.api.repository.LikeRepository;
+import com.twitterclone.api.repository.RetweetRepository;
 import com.twitterclone.api.service.RetweetService;
 import com.twitterclone.api.service.UserService;
 import jakarta.validation.Valid;
@@ -22,6 +28,8 @@ public class RetweetController {
 
     private final RetweetService retweetService;
     private final UserService userService;
+    private final LikeRepository likeRepository;
+    private final RetweetRepository retweetRepository;
 
     private User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -29,15 +37,27 @@ public class RetweetController {
         return userService.findByEmail(currentPrincipalName);
     }
 
+    private TweetResponse toTweetResponse(Tweet tweet, User currentUser) {
+        TweetResponse response = TweetMapper.toResponse(tweet);
+        if (tweet == null || currentUser == null) {
+            return response;
+        }
+        boolean liked = likeRepository.findByUserAndTweet(currentUser, tweet).isPresent();
+        boolean retweeted = retweetRepository.findByUserAndTweet(currentUser, tweet).isPresent();
+        response.setLikedByCurrentUser(liked);
+        response.setRetweetedByCurrentUser(retweeted);
+        return response;
+    }
+
     @PostMapping
-    public ResponseEntity<Retweet> createRetweet(@Valid @RequestBody RetweetRequest request) {
+    public ResponseEntity<RetweetResponse> createRetweet(@Valid @RequestBody RetweetRequest request) {
         User currentUser = getCurrentUser();
         Retweet newRetweet = retweetService.createRetweet(request.getTweetId(), currentUser);
         if (newRetweet == null) {
             
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(newRetweet);
+        return ResponseEntity.ok(RetweetMapper.toResponse(newRetweet));
     }
 
     @DeleteMapping("/{tweetId}")
@@ -52,10 +72,13 @@ public class RetweetController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<List<Tweet>> getMyRetweets() {
+    public ResponseEntity<List<TweetResponse>> getMyRetweets() {
         User currentUser = getCurrentUser();
         List<Tweet> tweets = retweetService.getRetweetedTweets(currentUser);
-        return ResponseEntity.ok(tweets);
+        List<TweetResponse> response = tweets.stream()
+                .map(tweet -> toTweetResponse(tweet, currentUser))
+                .toList();
+        return ResponseEntity.ok(response);
     }
 }
 

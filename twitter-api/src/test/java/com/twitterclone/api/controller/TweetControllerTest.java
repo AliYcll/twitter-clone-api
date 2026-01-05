@@ -1,7 +1,7 @@
 package com.twitterclone.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.twitterclone.api.dtos.TweetRequest;
+import com.twitterclone.api.dtos.requests.TweetRequest;
 import com.twitterclone.api.model.Tweet;
 import com.twitterclone.api.model.User;
 import com.twitterclone.api.repository.UserRepository;
@@ -16,6 +16,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.server.ResponseStatusException;
@@ -51,6 +52,15 @@ class TweetControllerTest {
     @MockBean
     private UserRepository userRepository;
 
+    @MockBean
+    private PasswordEncoder passwordEncoder;
+
+    @MockBean
+    private com.twitterclone.api.repository.LikeRepository likeRepository;
+
+    @MockBean
+    private com.twitterclone.api.repository.RetweetRepository retweetRepository;
+
     @Test
     @WithMockUser(username = "user1@example.com")
     void createTweet_WhenAuthenticated_ShouldReturnCreatedTweet() throws Exception {
@@ -76,7 +86,7 @@ class TweetControllerTest {
                         .content(objectMapper.writeValueAsString(tweetRequest)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").value("This is a test tweet"))
-                .andExpect(jsonPath("$.user.username").value("user1@example.com"));
+                .andExpect(jsonPath("$.user.username").value("user1"));
     }
 
     @Test

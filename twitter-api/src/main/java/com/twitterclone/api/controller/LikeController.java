@@ -1,6 +1,8 @@
 package com.twitterclone.api.controller;
 
-import com.twitterclone.api.dtos.LikeRequest;
+import com.twitterclone.api.dtos.requests.LikeRequest;
+import com.twitterclone.api.dtos.responses.LikeResponse;
+import com.twitterclone.api.mapper.LikeMapper;
 import com.twitterclone.api.model.Like;
 import com.twitterclone.api.model.User;
 import com.twitterclone.api.service.LikeService;
@@ -30,14 +32,14 @@ public class LikeController {
     }
 
     @PostMapping
-    public ResponseEntity<Like> likeTweet(@Valid @RequestBody LikeRequest request) {
+    public ResponseEntity<LikeResponse> likeTweet(@Valid @RequestBody LikeRequest request) {
         User currentUser = getCurrentUser();
         Like newLike = likeService.likeTweet(request.getTweetId(), currentUser);
         if (newLike == null) {
             
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(newLike);
+        return ResponseEntity.ok(LikeMapper.toResponse(newLike));
     }
 
     @PostMapping("/dislike")

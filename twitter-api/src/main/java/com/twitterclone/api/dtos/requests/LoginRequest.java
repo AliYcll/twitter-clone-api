@@ -1,4 +1,4 @@
-package com.twitterclone.api.dtos;
+package com.twitterclone.api.dtos.requests;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -11,11 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LoginRequest {
 
-    @NotBlank(message = "E-posta boş olamaz")
-    @Email(message = "Geçerli bir e-posta adresi girin")
+    @NotBlank(message = "E-posta boY olamaz")
+    @Email(message = "GeÇõerli bir e-posta adresi girin")
     private String email;
 
-    @NotBlank(message = "Şifre boş olamaz")
+    @NotBlank(message = "?ifre boY olamaz")
     private String password;
 }
-

@@ -1,8 +1,8 @@
 package com.twitterclone.api.service;
 
-import com.twitterclone.api.dtos.AuthResponse;
-import com.twitterclone.api.dtos.LoginRequest;
-import com.twitterclone.api.dtos.RegisterRequest;
+import com.twitterclone.api.dtos.requests.LoginRequest;
+import com.twitterclone.api.dtos.requests.RegisterRequest;
+import com.twitterclone.api.dtos.responses.AuthResponse;
 import com.twitterclone.api.exception.UserAlreadyExistsException;
 import com.twitterclone.api.model.User;
 import com.twitterclone.api.repository.UserRepository;

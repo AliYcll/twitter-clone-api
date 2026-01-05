@@ -1,7 +1,9 @@
 package com.twitterclone.api.controller;
 
-import com.twitterclone.api.dtos.CommentRequest;
-import com.twitterclone.api.dtos.CommentUpdateRequest;
+import com.twitterclone.api.dtos.requests.CommentRequest;
+import com.twitterclone.api.dtos.requests.CommentUpdateRequest;
+import com.twitterclone.api.dtos.responses.CommentResponse;
+import com.twitterclone.api.mapper.CommentMapper;
 import com.twitterclone.api.model.Comment;
 import com.twitterclone.api.model.User;
 import com.twitterclone.api.service.CommentService;
@@ -12,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/comments")
@@ -28,27 +32,30 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity<Comment> createComment(@Valid @RequestBody CommentRequest request) {
+    public ResponseEntity<CommentResponse> createComment(@Valid @RequestBody CommentRequest request) {
         User currentUser = getCurrentUser();
         Comment newComment = commentService.createComment(request.getTweetId(), request.getContent(), currentUser);
         if (newComment == null) {
             
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(newComment);
+        return ResponseEntity.ok(CommentMapper.toResponse(newComment));
     }
 
     @GetMapping("/tweet/{tweetId}")
-    public ResponseEntity<?> getCommentsByTweet(@PathVariable Long tweetId) {
+    public ResponseEntity<List<CommentResponse>> getCommentsByTweet(@PathVariable Long tweetId) {
         var comments = commentService.getCommentsForTweet(tweetId);
         if (comments == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(comments);
+        var response = comments.stream()
+                .map(CommentMapper::toResponse)
+                .toList();
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{commentId}")
-    public ResponseEntity<Comment> updateComment(
+    public ResponseEntity<CommentResponse> updateComment(
             @PathVariable Long commentId,
             @Valid @RequestBody CommentUpdateRequest request
     ) {
@@ -58,7 +65,7 @@ public class CommentController {
             
             return ResponseEntity.status(403).build();
         }
-        return ResponseEntity.ok(updatedComment);
+        return ResponseEntity.ok(CommentMapper.toResponse(updatedComment));
     }
 
     @DeleteMapping("/{commentId}")
