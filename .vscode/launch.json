@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-TwitterApiApplication",
+            "request": "launch",
+            "mainClass": "com.twitterclone.api.TwitterApiApplication",
+            "projectName": "twitter-api",
+            "args": "--spring.profiles.active=local"
+        }
+    ]
+}
